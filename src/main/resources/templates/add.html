@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.3/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Dashboard Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/res/bootstrap.min.css}" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/res/dashboard.css}" rel="stylesheet">
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-animation {
+        from {
+            opacity: 0.99
+        }
+        to {
+            opacity: 1
+        }
+    }
+
+    @keyframes chartjs-render-animation {
+        from {
+            opacity: 0.99
+        }
+        to {
+            opacity: 1
+        }
+    }
+
+    .chartjs-render-monitor {
+        -webkit-animation: chartjs-render-animation 0.001s;
+        animation: chartjs-render-animation 0.001s;
+    }</style>
+</head>
+<body>
+<nav th:replace="commns/bar :: header_nav"></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="commns/bar :: bar(activeUri='user')"></nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <h2 th:text="${user!=null}?'信息修改':'用户添加'">用户添加</h2>
+            <form class="" th:action="@{/user}" method="post">
+                <input type="hidden"  name="id" th:value="${user.id}" th:if="${user!=null}">
+                <input type="hidden"  name="_method" th:value="'put'" th:if="${user!=null}">
+                <div class="mb-3">
+                    <label for="name" class=" control-label">姓名</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="姓名" th:value="${user!=null}?${user.name}" >
+                </div>
+                <div class="d-block mb-3">
+                    <p>性别</p>
+                    <div class="custom-control custom-radio">
+                        <input id="sex_G" checked name="sex" value="1" type="radio" class="custom-control-input" th:checked="${user==null} or ${user.sex==1} "
+                               required="">
+                        <label class="custom-control-label" for="sex_G">男</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="sex_M" name="sex" value="0" type="radio" class="custom-control-input" th:checked="${user!=null}?${user.sex==0}"
+                               required="">
+                        <label class="custom-control-label" for="sex_M">女</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="control-label">日期</label>
+                    <input type="date" name="createTime" id="date" class="form-control" th:value="${user!=null}?${#dates.format(user.createTime,'yyyy-MM-dd')}" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="depart">部门</label>
+                    <select name="department.id" id="depart" class="custom-select d-block "  >
+                        <option th:value="${d.id}" th:selected="${user!=null}?${user.department.id==d.id}" th:each="d :${departments}" >[[${d.name}]]</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">提交</button>
+                </div>
+
+            </form>
+        </main>
+    </div>
+</div>
+
+
+
+</body>
+</html>
