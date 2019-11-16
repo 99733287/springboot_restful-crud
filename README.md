@@ -4,12 +4,17 @@
 
 
 server.port=80
+
 spring.messages.basename=i18n.login
+
 spring.mvc.hiddenmethod.filter.enabled=true
+
 spring.mvc.date-format=yyyy-MM-dd
 
 
+
 server.servlet.context-path=/crud
+
 server.tomcat.uri-encoding=UTF-8
 
 
